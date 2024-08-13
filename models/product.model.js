@@ -1,90 +1,82 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 // Define the schema for a single variation
 const variationSchema = new mongoose.Schema({
-    size: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    color: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    stock: {
-        type: Number,
-        required: true,
-        min: 0,
-    },
-    price: {
-        type: Number,
-        required: true,
-        min: 0,
-    }
+  size: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  color: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  stock: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
 });
 
 // Define the schema for the product image gallery
 const imageSchema = new mongoose.Schema({
-    url: {
-        type: String,
-        required: true,
-    },
-    altText: {
-        type: String,
-        trim: true,
-    }
+  url: {
+    type: String,
+    required: true,
+  },
+  altText: {
+    type: String,
+    trim: true,
+  },
 });
 
 // Define the main product schema
-const productSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
     description: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
     category: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
     imageUrl: {
-        type: String,
-        required: false,
+      type: String,
+      required: false,
     },
-    gallery: [imageSchema], // Array of images
-    variations: [variationSchema], // Array of variations (one per size/color combination)
-    basePrice: {               // Added basePrice field
-        type: Number,
-        required: true,
-        min: 0,
+    stock: {
+      type: Number,
+      required: true,
     },
-    quantity: {  
-        type: Number,
-        required: true,
-        min: 1,
+    basePrice: {
+      type: Number,
+      required: true,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
+    quantity: {
+      type: Number,
+      required: true,
     },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
+    gallery: [imageSchema],
+    variations: [variationSchema],
+  },
+  { timestamps: true }
+);
 
-// Middleware to update the `updatedAt` field before each save
-productSchema.pre('save', function (next) {
-    this.updatedAt = Date.now();
-    next();
-});
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 export default Product;

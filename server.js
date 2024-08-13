@@ -36,7 +36,7 @@ app.use(errorHandler);
 
 // MongoDB connection and server start
 mongoDbConnect().then(() => {
-    const PORT = process.env.PORT || 9090;
+    const PORT = process.env.PORT || 9090
     app.listen(PORT, () => {
         console.log(`Server listening on ${PORT}`);
     });
